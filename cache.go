@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+
+	"github.com/jan-g/delay"
 )
 
 type Key interface{}
@@ -19,8 +21,8 @@ type Cache interface {
 type cache struct {
 	ctx       context.Context
 	refresher Refresher
-	positive  Delay
-	negative  Delay
+	positive  delay.Delay
+	negative  delay.Delay
 	kv        sync.Map // Key: <-chan r
 }
 
@@ -30,7 +32,7 @@ type r struct {
 	Err error
 }
 
-func New(ctx context.Context, refresher Refresher, positive Delay, negative Delay) Cache {
+func New(ctx context.Context, refresher Refresher, positive delay.Delay, negative delay.Delay) Cache {
 	return &cache{
 		ctx:       ctx,
 		refresher: refresher,

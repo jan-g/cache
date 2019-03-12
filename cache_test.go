@@ -9,6 +9,8 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/jan-g/delay"
 )
 
 func init() {
@@ -20,8 +22,8 @@ const (
 )
 
 var (
-	positive = NewDelay(2 * period)
-	negative = NewDelay(period, WithMultiplier(2), WithMaximum(5*period))
+	positive = delay.New(2 * period)
+	negative = delay.New(period, delay.WithMultiplier(2), delay.WithMaximum(5*period))
 )
 
 type refresher struct {
